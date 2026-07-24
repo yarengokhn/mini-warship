@@ -1,31 +1,35 @@
 class GameOverController {
+  constructor(ship) {
+    this.ship = ship;
 
+    this.screen = document.getElementById("game-over");
 
-    constructor(ship){
+    this.button = document.getElementById("restart-button");
 
-        this.ship = ship;
+    this.button.addEventListener("click", () => {
+      this.restart();
+    });
+  }
 
+  update() {
+    if (this.ship.isGameOver) {
+      document.getElementById("game-over").style.display = "flex";
     }
+  }
 
+  restart() {
+    this.ship.health = 100;
 
-    update(){
+    this.ship.isGameOver = false;
 
+    this.ship.isColliding = false;
 
-        if(this.ship.isGameOver){
+    this.ship.mesh.position.set(0, 0, 0);
 
+    this.ship.velocity.set(0, 0, 0);
 
-            document
-            .getElementById("game-over")
-            .style.display = "flex";
-
-
-        }
-
-
-    }
-
-
+    this.screen.style.display = "none";
+  }
 }
-
 
 export default GameOverController;
