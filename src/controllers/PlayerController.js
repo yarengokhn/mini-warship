@@ -1,0 +1,22 @@
+class PlayerController {
+    constructor(ship,input) {
+        this.ship = ship;
+        this.input = input;
+    }
+    update() {
+       if(this.input.isDown("KeyD")){
+            this.ship.moveRight();
+        }   
+        if(this.input.isDown("KeyA")){
+            this.ship.moveLeft();
+        }
+        if(this.input.isDown("KeyW")){
+            this.ship.moveForward();
+        }
+        if(this.input.isDown("KeyS")){
+            this.ship.moveBackward();
+        }
+
+    }
+}
+export default PlayerController;
