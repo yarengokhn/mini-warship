@@ -11,17 +11,15 @@ class Ship {
     this.radius = 1;
     this.isColliding = false; 
     this.isGameOver = false; 
-    
-    
-    
+
     const geometry = new THREE.BoxGeometry(1, 0.3, 2);
 
 
-    const material = new THREE.MeshStandardMaterial({
+    this.material = new THREE.MeshStandardMaterial({
       color: 0xffffff,
     });
 
-    this.mesh = new THREE.Mesh(geometry, material);
+    this.mesh = new THREE.Mesh(geometry, this.material);
 
     this.mesh.castShadow = true;
 
@@ -76,6 +74,26 @@ class Ship {
 
     }
   }
+  pushBack(direction) {
+    this.velocity.add(direction);
+  }
+
+  damageEffect(){
+
+    this.material.color.set(
+        0xff0000
+    );
+
+
+    setTimeout(()=>{
+
+        this.material.color.set(
+            0xffffff
+        );
+
+    },100);
+
+}
 
 }
 

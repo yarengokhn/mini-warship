@@ -4,8 +4,8 @@ class PlayerController {
         this.input = input;
     }
     update() {
-        if(this.ship.isColliding) {
-            return; // gemi çarpışma durumunda fonksiyon bitiyor diğer durumlara gelmiyor
+        if(this.ship.isGameOver) {
+            return; // Oyun bittiğinde gemi hareket etmesin
         }
        if(this.input.isDown("KeyD")){
             this.ship.moveRight();

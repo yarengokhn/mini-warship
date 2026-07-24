@@ -18,6 +18,8 @@ import CollisionController from "./controllers/CollisionController.js";
 
 import GameOverController from "./controllers/GameOverController.js";
 
+import HealthUIController from "./controllers/HealthUIController.js";
+
 import Obstacle from "./objects/Obstacle.js";
 
 import "./style.css";
@@ -46,6 +48,8 @@ const collisionController = new CollisionController(ship, obstacle);
 
 const gameOverController = new GameOverController(ship);
 
+const healthUIController = new HealthUIController(ship);
+
 scene.add(ship.mesh);
 
 const sea = new Sea();
@@ -62,6 +66,7 @@ const game = new GameLoop(renderer, scene, camera, [
   cameraController,
   collisionController,
   gameOverController,
+  healthUIController,
   sea,
 ]);
 
