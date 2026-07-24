@@ -8,8 +8,14 @@ class Ship {
     this.velocity = new THREE.Vector3();
     this.acceleration = 0.002;
     this.friction = 0.95; // geminin hareketini yavaşlatmak için sürtünme katsayısı
-
+    this.radius = 1;
+    this.isColliding = false; 
+    this.isGameOver = false; 
+    
+    
+    
     const geometry = new THREE.BoxGeometry(1, 0.3, 2);
+
 
     const material = new THREE.MeshStandardMaterial({
       color: 0xffffff,
@@ -23,12 +29,6 @@ class Ship {
   }
 
   update() {
-
-    console.log(
-        "velocity:",
-        this.velocity.x,
-        this.velocity.z
-    );
 
 
     this.velocity.clampLength(0, this.maxSpeed);
@@ -62,6 +62,21 @@ class Ship {
       this.velocity.z += this.acceleration;
     }
   }
+
+
+  stop() {
+    this.velocity.set(0, 0, 0);
+  }
+
+  takeDamage(amount) {
+    this.health -= amount;
+    if (this.health <= 0) {
+      this.health = 0;
+      this.isGameOver = true;
+
+    }
+  }
+
 }
 
 export default Ship;

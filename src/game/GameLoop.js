@@ -5,7 +5,7 @@ class GameLoop {
         renderer,
         scene,
         camera,
-        objects 
+        objects = []
     ){
 
 
@@ -31,6 +31,8 @@ class GameLoop {
                 animate
             );
 
+            //Ben elimdeki bütün objelere bakarım. 
+            // Eğer onların update() fonksiyonu varsa her frame çalıştırırım
             this.objects.forEach(
                 (object) => {
                     if(object.update){

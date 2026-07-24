@@ -6,6 +6,10 @@ class Obstacle {
 
     constructor(){
 
+        this.radius= 0.8;
+
+        
+
         const geometry =
             new THREE.BoxGeometry(
                 1,

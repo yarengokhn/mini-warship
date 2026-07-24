@@ -14,7 +14,13 @@ import PlayerController from "./controllers/PlayerController.js";
 
 import CameraController from "./controllers/CameraController.js";
 
+import CollisionController from "./controllers/CollisionController.js";
+
+import GameOverController from "./controllers/GameOverController.js";
+
 import Obstacle from "./objects/Obstacle.js";
+
+import "./style.css";
 
 const world = new SceneManager();
 
@@ -30,9 +36,15 @@ const keyboard = new Keyboard();
 
 const ship = new Ship();
 
+const obstacle = new Obstacle();
+
 const cameraController = new CameraController(camera, ship);
 
 const playerController = new PlayerController(ship, keyboard);
+
+const collisionController = new CollisionController(ship, obstacle);
+
+const gameOverController = new GameOverController(ship);
 
 scene.add(ship.mesh);
 
@@ -40,14 +52,16 @@ const sea = new Sea();
 
 scene.add(sea.mesh);
 
-const obstacle = new Obstacle();
-
 scene.add(obstacle.mesh);
+
+
 
 const game = new GameLoop(renderer, scene, camera, [
   playerController,
   ship,
   cameraController,
+  collisionController,
+  gameOverController,
   sea,
 ]);
 

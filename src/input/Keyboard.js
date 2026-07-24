@@ -1,23 +1,23 @@
 class Keyboard {
     constructor() {
-        this.keys = {};
+        this.keys = {}; // Klavyeden basılan tuşları tutmak için bir nesne oluşturuyoruz
 
         window.addEventListener(
-            "keydown",
+            "keydown",//tuşa basmak
             (event) => {
-                this.keys[event.code] = true;
+                this.keys[event.code] = true; //event.code hangi tuşa basıldığını söyler
             }
         );
 
         window.addEventListener(
-            "keyup",
+            "keyup",//tuşu bırakmak
             (event) => {
                 this.keys[event.code] = false;
             }
         );
     }
 
-    isDown(key) {
+    isDown(key) { //bu tuşa basılıyor mu fonksiyonu 
         return this.keys[key] ;
     }
 
