@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 class Ship {
   constructor() {
@@ -12,17 +13,41 @@ class Ship {
     this.isColliding = false;
     this.isGameOver = false;
 
-    const geometry = new THREE.BoxGeometry(1, 0.3, 2);
+    const loader = new GLTFLoader();
 
-    this.material = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
+    this.mesh = new THREE.Group();
+    loader.load("/models/ship-large.glb", (gltf) => {
+      const model = gltf.scene;
+
+      //X,Y,Z ekseninde  küçült
+      model.scale.set(0.2, 0.2, 0.2);
+
+      model.rotation.y = Math.PI;
+
+      //traverse() -->modelin içindeki bütün parçaları gez
+      model.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+
+          child.material.color.set("#ae7314");
+          child.material.needsUpdate = true;
+        }
+      });
+
+      this.mesh.add(model);
     });
 
-    this.mesh = new THREE.Mesh(geometry, this.material);
+    // const geometry = new THREE.BoxGeometry(1, 0.3, 2);
 
-    this.mesh.castShadow = true;
+    // this.material = new THREE.MeshStandardMaterial({
+    //   color: 0xffffff,
+    // });
 
-    this.mesh.rotation.y = Math.PI;
+    // this.mesh = new THREE.Mesh(geometry, this.material);
+
+    // this.mesh.castShadow = true;
+
+    // this.mesh.rotation.y = Math.PI;
   }
 
   update() {
@@ -74,10 +99,18 @@ class Ship {
   }
 
   damageEffect() {
-    this.material.color.set(0xff0000);
+    this.mesh.traverse((child) => {
+      if (child.isMesh) {
+        child.material.color.set(0xff0000);
+      }
+    });
 
     setTimeout(() => {
-      this.material.color.set(0xffffff);
+      this.mesh.traverse((child) => {
+        if (child.isMesh) {
+          child.material.color.set(0xffffff);
+        }
+      });
     }, 100);
   }
 }

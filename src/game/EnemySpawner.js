@@ -14,6 +14,9 @@ class EnemySpawner {
   }
 
   update() {
+    // if game over, stop spawning/updating enemies
+    if (this.playerShip && this.playerShip.isGameOver) return;
+
     this.timer++;
 
     if (this.timer >= this.spawnRate && this.enemies.length < this.maxEnemies) {
@@ -21,9 +24,23 @@ class EnemySpawner {
       this.timer = 0;
     }
 
+    const reachThreshold = this.playerShip
+      ? this.playerShip.mesh.position.z - 0.5
+      : 0;
+
     this.enemies = this.enemies.filter((enemy) => {
       if (enemy.isDestroyed) {
         this.scene.remove(enemy.mesh);
+
+        return false;
+      }
+      // if enemy reaches player line -> game over
+      if (this.playerShip && enemy.mesh.position.z >= reachThreshold) {
+        this.playerShip.isGameOver = true;
+
+        if (enemy.mesh && enemy.mesh.parent) {
+          enemy.mesh.parent.remove(enemy.mesh);
+        }
 
         return false;
       }
@@ -35,11 +52,7 @@ class EnemySpawner {
   }
 
   spawn() {
-    if (this.enemies.length >= this.maxEnemies) {
-      return;
-    }
-
-    const enemy = new EnemyShip(this.scene);
+    const enemy = new EnemyShip(this.scene, this.playerShip);
 
     enemy.mesh.position.set((Math.random() - 0.5) * 6, 0.3, -15);
 

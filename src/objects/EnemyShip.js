@@ -2,8 +2,9 @@ import * as THREE from "three";
 import Bullet from "./Bullet.js";
 
 class EnemyShip {
-  constructor(scene) {
+  constructor(scene, playerShip = null) {
     this.scene = scene;
+    this.playerShip = playerShip;
     this.speed = 0.05;
     this.health = 40;
     this.isDestroyed = false;
@@ -21,6 +22,8 @@ class EnemyShip {
     this.mesh = new THREE.Mesh(geometry, material);
 
     this.mesh.castShadow = true;
+
+    this.baseColor = material.color.getHex();
 
     this.mesh.position.z = -10;
     this.mesh.position.x = (Math.random() - 0.5) * 6;
@@ -49,6 +52,13 @@ class EnemyShip {
 
     bullet.mesh.position.copy(this.mesh.position);
 
+    // spawn enemy bullet at player's height if available so it can hit the ship
+    if (this.playerShip && this.playerShip.mesh) {
+      bullet.mesh.position.y = this.playerShip.mesh.position.y;
+    } else {
+      bullet.mesh.position.y = this.mesh.position.y;
+    }
+
     this.scene.add(bullet.mesh);
 
     this.bullets.push(bullet);
@@ -67,13 +77,35 @@ class EnemyShip {
   destroy() {
     this.isDestroyed = true;
     this.mesh.visible = false;
+
+    // remove any bullets this enemy spawned from the scene
+    this.bullets.forEach((bullet) => {
+      try {
+        if (bullet && bullet.mesh) {
+          if (bullet.mesh.parent) {
+            bullet.mesh.parent.remove(bullet.mesh);
+          }
+          if (typeof bullet.destroy === "function") {
+            bullet.destroy();
+          } else {
+            bullet.mesh.visible = false;
+          }
+        }
+      } catch {
+        // ignore
+      }
+    });
+    this.bullets = [];
+    this.shootTimer = 0;
   }
   damageEffect() {
-    this.mesh.material.color.set(0xffff00);
+    const mat = this.mesh.material;
+    const original = this.baseColor || mat.color.getHex();
+    mat.color.set(0xffff00);
 
     setTimeout(() => {
-      this.mesh.material.color.set(0xff0000);
-    }, 100);
+      mat.color.set(original);
+    }, 150);
   }
 }
 

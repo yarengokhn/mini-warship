@@ -48,15 +48,28 @@ class CollisionController {
     const playerBox = new THREE.Box3().setFromObject(this.ship.mesh);
 
     this.enemySpawner.enemies.forEach((enemy) => {
+      const toRemove = [];
+
       enemy.bullets.forEach((bullet) => {
+        if (!bullet || !bullet.mesh) return;
+
         const bulletBox = new THREE.Box3().setFromObject(bullet.mesh);
 
         if (playerBox.intersectsBox(bulletBox)) {
           this.ship.takeDamage(10);
 
-          bullet.mesh.visible = false;
+          // remove bullet from scene and mark for removal so it can't hit multiple times
+          if (bullet.mesh.parent) {
+            bullet.mesh.parent.remove(bullet.mesh);
+          }
+
+          toRemove.push(bullet);
         }
       });
+
+      if (toRemove.length > 0) {
+        enemy.bullets = enemy.bullets.filter((b) => !toRemove.includes(b));
+      }
     });
   }
 
@@ -74,7 +87,15 @@ class CollisionController {
         if (bulletBox.intersectsBox(enemyBox)) {
           enemy.takeDamage(20);
 
-          bullet.mesh.visible = false;
+          // remove bullet mesh from scene and from shooting controller so it can't hit multiple enemies
+          if (bullet.mesh && bullet.mesh.parent) {
+            bullet.mesh.parent.remove(bullet.mesh);
+          }
+
+          if (this.shootingController && this.shootingController.bullets) {
+            this.shootingController.bullets =
+              this.shootingController.bullets.filter((b) => b !== bullet);
+          }
         }
       });
     });
