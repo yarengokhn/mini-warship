@@ -43,6 +43,7 @@ class CollisionController {
       this.ship.isColliding = false;
     }
   }
+
   checkEnemyBullets() {
     const playerBox = new THREE.Box3().setFromObject(this.ship.mesh);
 
@@ -94,6 +95,8 @@ class CollisionController {
         const direction = new THREE.Vector3()
           .subVectors(this.ship.mesh.position, enemy.mesh.position)
           .normalize();
+
+        direction.y = 0;
 
         this.ship.pushBack(direction.multiplyScalar(0.3));
 
