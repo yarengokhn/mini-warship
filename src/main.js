@@ -22,7 +22,10 @@ import HealthUIController from "./controllers/HealthUIController.js";
 
 import Obstacle from "./objects/Obstacle.js";
 
+import EnemySpawner from "./game/EnemySpawner.js";
+
 import "./style.css";
+import ShootingController from "./controllers/ShootingController.js";
 
 const world = new SceneManager();
 
@@ -40,11 +43,20 @@ const ship = new Ship();
 
 const obstacle = new Obstacle();
 
+const enemySpawner = new EnemySpawner(scene, ship);
+
 const cameraController = new CameraController(camera, ship);
 
 const playerController = new PlayerController(ship, keyboard);
 
-const collisionController = new CollisionController(ship, obstacle);
+const shootingController = new ShootingController(scene, ship, keyboard);
+
+const collisionController = new CollisionController(
+  ship,
+  obstacle,
+  shootingController,
+  enemySpawner,
+);
 
 const gameOverController = new GameOverController(ship);
 
@@ -58,13 +70,13 @@ scene.add(sea.mesh);
 
 scene.add(obstacle.mesh);
 
-
-
 const game = new GameLoop(renderer, scene, camera, [
   playerController,
+  shootingController,
   ship,
-  cameraController,
+  enemySpawner,
   collisionController,
+  cameraController,
   gameOverController,
   healthUIController,
   sea,
