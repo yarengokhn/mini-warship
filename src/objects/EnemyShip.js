@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import Bullet from "./Bullet.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 class EnemyShip {
   constructor(scene, playerShip = null) {
@@ -8,23 +9,35 @@ class EnemyShip {
     this.speed = 0.05;
     this.health = 40;
     this.isDestroyed = false;
+    this.baseColor = new THREE.Color("#372507");
 
     this.bullets = [];
     this.shootTimer = 0;
     this.shootRate = 120;
 
-    const geometry = new THREE.BoxGeometry(1, 0.3, 2);
+    const loader = new GLTFLoader();
 
-    const material = new THREE.MeshStandardMaterial({
-      color: "#4e3687",
+    this.mesh = new THREE.Group();
+    loader.load("/models/ship-large.glb", (gltf) => {
+      const model = gltf.scene;
+
+      //X,Y,Z ekseninde  küçült
+      model.scale.set(0.2, 0.2, 0.2);
+
+      model.rotation.y = Math.PI;
+
+      //traverse() -->modelin içindeki bütün parçaları gez
+      model.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+
+          child.material.color.set(this.baseColor);
+          child.material.needsUpdate = true;
+        }
+      });
+
+      this.mesh.add(model);
     });
-
-    this.mesh = new THREE.Mesh(geometry, material);
-
-    this.mesh.castShadow = true;
-
-    this.baseColor = material.color.getHex();
-
     this.mesh.position.z = -10;
     this.mesh.position.x = (Math.random() - 0.5) * 6;
     this.mesh.position.y = 0.3;
@@ -99,12 +112,18 @@ class EnemyShip {
     this.shootTimer = 0;
   }
   damageEffect() {
-    const mat = this.mesh.material;
-    const original = this.baseColor || mat.color.getHex();
-    mat.color.set(0xffff00);
+    this.mesh.traverse((child) => {
+      if (child.isMesh) {
+        child.material.color.set(0xffff00);
+      }
+    });
 
     setTimeout(() => {
-      mat.color.set(original);
+      this.mesh.traverse((child) => {
+        if (child.isMesh) {
+          child.material.color.set(this.baseColor);
+        }
+      });
     }, 150);
   }
 }

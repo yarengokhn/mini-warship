@@ -48,6 +48,7 @@ class Ship {
     // this.mesh.castShadow = true;
 
     // this.mesh.rotation.y = Math.PI;
+    this.mesh.position.y = 0.3;
   }
 
   update() {

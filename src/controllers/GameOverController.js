@@ -1,6 +1,7 @@
 class GameOverController {
-  constructor(ship) {
+  constructor(ship, sea) {
     this.ship = ship;
+    this.sea = sea;
 
     this.screen = document.getElementById("game-over");
 
@@ -13,7 +14,10 @@ class GameOverController {
 
   update() {
     if (this.ship.isGameOver) {
-      document.getElementById("game-over").style.display = "flex";
+      this.screen.style.display = "flex";
+      if (this.sea && !this.sea.isPaused) {
+        this.sea.stop();
+      }
     }
   }
 

@@ -58,15 +58,23 @@ const collisionController = new CollisionController(
   enemySpawner,
 );
 
-const gameOverController = new GameOverController(ship);
+const sea = new Sea(world.listener);
+
+const gameOverController = new GameOverController(ship, sea);
 
 const healthUIController = new HealthUIController(ship);
 
 scene.add(ship.mesh);
 
-const sea = new Sea();
-
 scene.add(sea.mesh);
+
+window.addEventListener(
+  "pointerdown",
+  () => {
+    sea.playAmbient();
+  },
+  { once: true },
+);
 
 scene.add(obstacle.mesh);
 

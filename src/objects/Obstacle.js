@@ -1,46 +1,39 @@
 import * as THREE from "three";
-
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 class Obstacle {
+  constructor() {
+    this.radius = 0.8;
 
+    const loader = new GLTFLoader();
 
-    constructor(){
+    this.mesh = new THREE.Group();
+    loader.load("/models/island.glb", (gltf) => {
+      const model = gltf.scene;
 
-        this.radius= 0.8;
+      //X,Y,Z ekseninde  küçült
+      model.scale.set(0.2, 0.2, 0.2);
 
-        
+      model.rotation.y = Math.PI;
 
-        const geometry =
-            new THREE.BoxGeometry(
-                1,
-                1,
-                1
-            );
+      //traverse() -->modelin içindeki bütün parçaları gez
+      model.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
 
+          child.material.color.set("#4d4231");
+          child.material.needsUpdate = true;
+        }
+      });
 
-        const material =
-            new THREE.MeshStandardMaterial({
-                color: 0xff0000
-            });
+      this.mesh.add(model);
+    });
 
+    this.mesh.position.x = 3;
+    this.mesh.position.z = -5;
 
-        this.mesh =
-            new THREE.Mesh(
-                geometry,
-                material
-            );
-
-
-        this.mesh.position.x = 3;
-        this.mesh.position.z = -5;
-
-
-        this.mesh.castShadow = true;
-
-    }
-
-
+    this.mesh.castShadow = true;
+  }
 }
-
 
 export default Obstacle;

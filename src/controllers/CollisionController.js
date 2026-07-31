@@ -30,6 +30,8 @@ class CollisionController {
         .subVectors(this.ship.mesh.position, this.obstacle.mesh.position)
         .normalize(); //Sadece yönü koru, uzunluğu 1 yap --> normaliza fonksiyonu
 
+      direction.y = 0; // sadece yatay düzlemde geri itme
+
       this.ship.pushBack(direction.multiplyScalar(0.2));
 
       //ilk temas anında hasar ver
@@ -75,30 +77,36 @@ class CollisionController {
 
   checkPlayerBullets() {
     const enemies = this.enemySpawner.enemies;
+    const bulletsToRemove = [];
 
     this.shootingController.bullets.forEach((bullet) => {
+      if (!bullet || !bullet.mesh) return;
+
       const bulletBox = new THREE.Box3().setFromObject(bullet.mesh);
 
-      enemies.forEach((enemy) => {
-        if (enemy.isDestroyed) return;
+      for (const enemy of enemies) {
+        if (enemy.isDestroyed) continue;
 
         const enemyBox = new THREE.Box3().setFromObject(enemy.mesh);
 
         if (bulletBox.intersectsBox(enemyBox)) {
           enemy.takeDamage(20);
 
-          // remove bullet mesh from scene and from shooting controller so it can't hit multiple enemies
-          if (bullet.mesh && bullet.mesh.parent) {
+          if (bullet.mesh.parent) {
             bullet.mesh.parent.remove(bullet.mesh);
           }
 
-          if (this.shootingController && this.shootingController.bullets) {
-            this.shootingController.bullets =
-              this.shootingController.bullets.filter((b) => b !== bullet);
-          }
+          bulletsToRemove.push(bullet);
+          break;
         }
-      });
+      }
     });
+
+    if (this.shootingController && this.shootingController.bullets) {
+      this.shootingController.bullets = this.shootingController.bullets.filter(
+        (b) => !bulletsToRemove.includes(b),
+      );
+    }
   }
 
   checkEnemyCollision() {

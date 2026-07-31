@@ -16,6 +16,10 @@ class SceneManager {
 
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
+    this.listener = new THREE.AudioListener();
+
+    this.camera.add(this.listener);
+
     this.renderer = new THREE.WebGLRenderer();
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
