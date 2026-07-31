@@ -54,7 +54,9 @@ class EnemySpawner {
   spawn() {
     const enemy = new EnemyShip(this.scene, this.playerShip);
 
-    enemy.mesh.position.set((Math.random() - 0.5) * 6, 0.3, -15);
+    const lanes = [-3, -1.5, 0, 1.5, 3];
+    const lane = lanes[Math.floor(Math.random() * lanes.length)];
+    enemy.mesh.position.set(lane, 0.3, -15);
 
     this.scene.add(enemy.mesh);
 

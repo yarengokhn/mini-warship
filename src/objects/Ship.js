@@ -5,7 +5,7 @@ class Ship {
   constructor() {
     this.maxSpeed = 0.05;
     this.health = 100;
-    this.boundary = 5; // x ve z ekseninde sınır içinde hareket edebilmesi için sınır değeri
+    this.boundary = 5; // x ekseninde sınır içinde hareket etme
     this.velocity = new THREE.Vector3();
     this.acceleration = 0.002;
     this.friction = 0.95; // geminin hareketini yavaşlatmak için sürtünme katsayısı
@@ -73,15 +73,11 @@ class Ship {
   }
 
   moveForward() {
-    if (this.mesh.position.z > -this.boundary) {
-      this.velocity.z -= this.acceleration;
-    }
+    this.velocity.z -= this.acceleration;
   }
 
   moveBackward() {
-    if (this.mesh.position.z < this.boundary) {
-      this.velocity.z += this.acceleration;
-    }
+    this.velocity.z += this.acceleration;
   }
 
   stop() {

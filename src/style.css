@@ -223,6 +223,43 @@ body,
 
 }
 
+#install-prompt {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 24px;
+    background: rgba(10, 20, 40, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    color: white;
+    z-index: 20;
+}
+
+#install-prompt p {
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    max-width: 260px;
+}
+
+#install-button {
+    appearance: none;
+    border: none;
+    background: #28a745;
+    color: white;
+    padding: 10px 24px;
+    font-size: 16px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+#install-button:hover {
+    background: #1f8f3d;
+}
 
 #health-container {
 
