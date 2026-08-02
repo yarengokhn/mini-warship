@@ -56,7 +56,8 @@ class EnemySpawner {
 
     const lanes = [-3, -1.5, 0, 1.5, 3];
     const lane = lanes[Math.floor(Math.random() * lanes.length)];
-    enemy.mesh.position.set(lane, 0.3, -15);
+    // spawn enemies farther away so they always approach from distance
+    enemy.mesh.position.set(lane, 0.3, -30);
 
     this.scene.add(enemy.mesh);
 

@@ -1,16 +1,18 @@
 import * as THREE from "three";
 
 class CollisionController {
-  constructor(ship, obstacle, shootingController, enemySpawner) {
+  constructor(ship, shootingController, enemySpawner) {
     this.ship = ship;
-    this.obstacle = obstacle;
+    // this.obstacle = obstacle;
     this.shootingController = shootingController;
     this.enemySpawner = enemySpawner;
   }
 
   //Box3 objenin gerçek kapladığı alanı hesaplar.
   update() {
-    this.checkObstacle();
+    // this.checkObstacle();
+
+    // this.checkEnemyObstacle();
 
     this.checkEnemyBullets();
 
@@ -19,32 +21,50 @@ class CollisionController {
     this.checkEnemyCollision();
   }
 
-  checkObstacle() {
-    const shipBox = new THREE.Box3().setFromObject(this.ship.mesh);
+  // checkObstacle() {
+  //   const shipBox = new THREE.Box3().setFromObject(this.ship.mesh);
 
-    const obstacleBox = new THREE.Box3().setFromObject(this.obstacle.mesh);
+  //   const obstacleBox = new THREE.Box3().setFromObject(this.obstacle.mesh);
 
-    if (shipBox.intersectsBox(obstacleBox)) {
-      const direction = new THREE.Vector3();
-      direction
-        .subVectors(this.ship.mesh.position, this.obstacle.mesh.position)
-        .normalize(); //Sadece yönü koru, uzunluğu 1 yap --> normaliza fonksiyonu
+  //   if (shipBox.intersectsBox(obstacleBox)) {
+  //     const direction = new THREE.Vector3();
+  //     direction
+  //       .subVectors(this.ship.mesh.position, this.obstacle.mesh.position)
+  //       .normalize(); //Sadece yönü koru, uzunluğu 1 yap --> normaliza fonksiyonu
 
-      direction.y = 0; // sadece yatay düzlemde geri itme
+  //     direction.y = 0; // sadece yatay düzlemde geri itme
 
-      this.ship.pushBack(direction.multiplyScalar(0.2));
+  //     this.ship.pushBack(direction.multiplyScalar(0.2));
 
-      //ilk temas anında hasar ver
-      if (!this.ship.isColliding) {
-        this.ship.takeDamage(10);
-        this.ship.damageEffect();
-        this.ship.isColliding = true;
-      }
-    } else {
-      //engel ile temas bitti
-      this.ship.isColliding = false;
-    }
-  }
+  //     //ilk temas anında hasar ver
+  //     if (!this.ship.isColliding) {
+  //       this.ship.takeDamage(10);
+  //       this.ship.damageEffect();
+  //       this.ship.isColliding = true;
+  //     }
+  //     // obstacle ile temas edildiğinde doğrudan oyun sonu yap
+  //     if (!this.ship.isGameOver) {
+  //       this.ship.isGameOver = true;
+  //     }
+  //   } else {
+  //     //engel ile temas bitti
+  //     this.ship.isColliding = false;
+  //   }
+  // }
+
+  // checkEnemyObstacle() {
+  //   const obstacleBox = new THREE.Box3().setFromObject(this.obstacle.mesh);
+
+  //   this.enemySpawner.enemies.forEach((enemy) => {
+  //     if (enemy.isDestroyed) return;
+
+  //     const enemyBox = new THREE.Box3().setFromObject(enemy.mesh);
+
+  //     if (enemyBox.intersectsBox(obstacleBox)) {
+  //       enemy.destroy();
+  //     }
+  //   });
+  // }
 
   checkEnemyBullets() {
     const playerBox = new THREE.Box3().setFromObject(this.ship.mesh);

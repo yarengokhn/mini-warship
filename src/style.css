@@ -224,42 +224,108 @@ body,
 }
 
 #install-prompt {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 18px 24px;
-    background: rgba(10, 20, 40, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    color: white;
-    z-index: 20;
+
+  position: fixed;
+
+  left: 50%;
+  top: 50%;
+
+
+  
+
+  transform: translate(-50%, -50%);
+
+  width: 220px;
+
+  background: rgba(0,0,0,0.85);
+
+  border-radius: 20px;
+
+  padding: 25px;
+
+  text-align: center;
+
+  color:white;
+
+  display:none;
+
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  z-index:100;
+
+  font-family:Arial;
+
+  animation: popup 0.5s ease-out;
+
+
 }
 
-#install-prompt p {
-    margin: 0;
-    font-size: 16px;
-    text-align: center;
-    max-width: 260px;
+
+@keyframes popup {
+
+    from {
+        transform:translate(-50%, -40%) scale(0.5);
+        opacity:0;
+    }
+
+    to {
+        transform:translate(-50%, -50%) scale(1);
+        opacity:1;
+    }
+
 }
 
-#install-button {
-    appearance: none;
-    border: none;
-    background: #28a745;
-    color: white;
-    padding: 10px 24px;
-    font-size: 16px;
-    border-radius: 999px;
-    cursor: pointer;
+
+#install-prompt h2{
+
+  font-size:22px;
+
+  margin-bottom:10px;
+
 }
 
-#install-button:hover {
-    background: #1f8f3d;
+
+#install-text{
+
+  font-size:16px;
+
+  margin-bottom:20px;
+
 }
+
+
+
+#install-button{
+
+  width:160px;
+
+  padding:12px;
+
+  border:none;
+
+  border-radius:25px;
+
+  background:#00ff88;
+
+  color:#000;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+}
+
+
+#install-button:hover{
+
+  transform:scale(1.05);
+
+}
+
 
 #health-container {
 
@@ -268,11 +334,28 @@ body,
     top: 20px;
     left: 20px;
 
-    width: 300px;
-    height: 30px;
+    width: 260px;
+    height: 28px;
 
-    background: #333;
-    z-index:10
+        background:
+    linear-gradient(
+        135deg,
+        rgba(20,30,50,.8),
+        rgba(0,0,0,.8)
+    );
+
+    border: 2px solid rgba(255,255,255,0.3);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    z-index: 10;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.5);
+
+    backdrop-filter: blur(5px);
 
 }
 
@@ -282,8 +365,34 @@ body,
     width: 100%;
     height: 100%;
 
-    background: green;
+    background: linear-gradient(
+        90deg,
+        #00ff88,
+        #00cc55
+    );
+
+    border-radius: 20px;
 
 
-    
+    transition:
+        width 0.3s ease;
+
+
+    box-shadow:
+        inset 0 0 10px rgba(255,255,255,0.5);
+
+}
+#health-icon {
+
+    position:absolute;
+
+    left:8px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    font-size:18px;
+
+    z-index:2;
+
 }

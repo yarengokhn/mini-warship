@@ -3,18 +3,12 @@ class GameOverController {
     this.ship = ship;
     this.sea = sea;
 
-    this.screen = document.getElementById("game-over");
-    this.button = document.getElementById("restart-button");
     this.installPrompt = document.getElementById("install-prompt");
     this.installButton = document.getElementById("install-button");
 
     this.elapsedSeconds = 0;
     this.lastTime = performance.now();
     this.installShown = false;
-
-    this.button.addEventListener("click", () => {
-      this.restart();
-    });
 
     this.installButton.addEventListener("click", () => {
       window.open("#", "_blank");
@@ -31,33 +25,22 @@ class GameOverController {
     }
 
     if (!this.installShown && this.elapsedSeconds >= 15) {
-      this.installShown = true;
-      this.installPrompt.style.display = "flex";
+      this.showCTA();
     }
 
     if (this.ship.isGameOver) {
-      this.screen.style.display = "flex";
       if (this.sea && !this.sea.isPaused) {
         this.sea.stop();
       }
-      if (!this.installShown) {
-        this.installShown = true;
-        this.installPrompt.style.display = "flex";
-      }
+
+      this.showCTA();
     }
   }
 
-  restart() {
-    this.ship.health = 100;
-    this.ship.isGameOver = false;
-    this.ship.isColliding = false;
-    this.ship.mesh.position.set(0, 0, 0);
-    this.ship.velocity.set(0, 0, 0);
-    this.screen.style.display = "none";
-    this.installPrompt.style.display = "none";
-    this.elapsedSeconds = 0;
-    this.installShown = false;
-    this.lastTime = performance.now();
+  showCTA() {
+    this.installShown = true;
+
+    this.installPrompt.style.display = "flex";
   }
 }
 
