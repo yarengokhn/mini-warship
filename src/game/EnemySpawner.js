@@ -5,6 +5,7 @@ class EnemySpawner {
     this.scene = scene;
     this.playerShip = playerShip;
     this.enemies = [];
+    this.explosions = [];
 
     this.timer = 0;
     this.spawnRate = 180;
@@ -14,8 +15,12 @@ class EnemySpawner {
   }
 
   update() {
-    // if game over, stop spawning/updating enemies
-    if (this.playerShip && this.playerShip.isGameOver) return;
+    // if game over or not started, stop spawning/updating enemies
+    if (
+      this.playerShip &&
+      (this.playerShip.isGameOver || !this.playerShip.isStarted)
+    )
+      return;
 
     this.timer++;
 
@@ -49,6 +54,12 @@ class EnemySpawner {
 
       return true;
     });
+
+    const delta = 1 / 60;
+    this.explosions.forEach((explosion) => explosion.update(delta));
+    this.explosions = this.explosions.filter(
+      (explosion) => !explosion.isFinished,
+    );
   }
 
   spawn() {
@@ -57,7 +68,7 @@ class EnemySpawner {
     const lanes = [-3, -1.5, 0, 1.5, 3];
     const lane = lanes[Math.floor(Math.random() * lanes.length)];
     // spawn enemies farther away so they always approach from distance
-    enemy.mesh.position.set(lane, 0.3, -30);
+    enemy.mesh.position.set(lane, 0.3, -25);
 
     this.scene.add(enemy.mesh);
 

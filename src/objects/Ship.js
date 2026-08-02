@@ -4,7 +4,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 class Ship {
   constructor() {
     this.maxSpeed = 0.05;
-    this.health = 80;
+    this.health = 100;
     this.boundary = 5; // x ekseninde sınır içinde hareket etme
     this.velocity = new THREE.Vector3();
     this.acceleration = 0.002;
@@ -12,6 +12,7 @@ class Ship {
     this.radius = 1;
     this.isColliding = false;
     this.isGameOver = false;
+    this.isStarted = false;
 
     const loader = new GLTFLoader();
 

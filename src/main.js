@@ -53,9 +53,9 @@ const shootingController = new ShootingController(scene, ship, keyboard);
 
 const collisionController = new CollisionController(
   ship,
-  // obstacle,
   shootingController,
   enemySpawner,
+  world.listener,
 );
 
 const sea = new Sea(world.listener);
@@ -68,10 +68,20 @@ scene.add(ship.mesh);
 
 scene.add(sea.mesh);
 
+const touchHint = document.getElementById("touch-hint");
+const startGame = () => {
+  if (ship.isStarted) return;
+  ship.isStarted = true;
+  if (touchHint) {
+    touchHint.style.display = "none";
+  }
+};
+
 window.addEventListener(
   "pointerdown",
   () => {
     sea.playAmbient();
+    startGame();
   },
   { once: true },
 );

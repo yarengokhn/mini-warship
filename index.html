@@ -14,10 +14,35 @@
       <div id="health-bar"></div>
     </div>
 
+    <div id="touch-hint">
+      <div class="hint-card">
+        <div class="hint-icon">👆</div>
+        <div class="hint-text">
+          <strong>Tap & drag to steer</strong>
+          <span>Avoid obstacles and keep your ship alive.</span>
+        </div>
+      </div>
+      <div class="hint-card">
+        <div class="hint-icon">🔥</div>
+        <div class="hint-text">
+          <strong>Use the fire button</strong>
+          <span>Tap the red button to shoot incoming enemies.</span>
+        </div>
+      </div>
+      <div class="hint-subtext">Tap anywhere to start</div>
+    </div>
+
     <div id="install-prompt">
       <h2>Ready for Battle?</h2>
-      <p id="install-text">Play Now!</p>
-      <button id="install-button">Install Now</button>
+      <p id="install-text">Play the mobile warship shooter now.</p>
+      <button id="install-button" data-href="https://example.com">
+        Install Now
+      </button>
+    </div>
+
+    <div id="mobile-fire">
+      <button id="fire-button">FIRE</button>
+      <div class="fire-label">Tap to shoot</div>
     </div>
 
     <script type="module" src="/src/main.js"></script>

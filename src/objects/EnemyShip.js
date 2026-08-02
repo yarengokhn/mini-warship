@@ -43,6 +43,10 @@ class EnemyShip {
     this.mesh.position.y = 0.3;
 
     this.mesh.rotation.y = Math.PI;
+
+    this.explosionAudio = new Audio("/sounds/explosion.mp3");
+    this.explosionAudio.preload = "auto";
+    this.explosionAudio.volume = 0.5;
   }
 
   update() {
@@ -90,6 +94,15 @@ class EnemyShip {
   destroy() {
     this.isDestroyed = true;
     this.mesh.visible = false;
+
+    if (this.explosionAudio) {
+      try {
+        this.explosionAudio.currentTime = 0;
+        this.explosionAudio.play();
+      } catch {
+        // some browsers block autoplay until user interaction; ignore safely
+      }
+    }
 
     // remove any bullets this enemy spawned from the scene
     this.bullets.forEach((bullet) => {

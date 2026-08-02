@@ -1,11 +1,19 @@
 import * as THREE from "three";
 
 class CollisionController {
-  constructor(ship, shootingController, enemySpawner) {
+  constructor(ship, shootingController, enemySpawner, listener) {
     this.ship = ship;
     // this.obstacle = obstacle;
     this.shootingController = shootingController;
     this.enemySpawner = enemySpawner;
+    this.listener = listener;
+    this.canPlayHitSound = true;
+    this.hitAudioBuffer = null;
+
+    const loader = new THREE.AudioLoader();
+    loader.load("/sounds/ship_hit.mp3", (buffer) => {
+      this.hitAudioBuffer = buffer;
+    });
   }
 
   //Box3 objenin gerçek kapladığı alanı hesaplar.
@@ -139,6 +147,13 @@ class CollisionController {
 
       if (playerBox.intersectsBox(enemyBox)) {
         this.ship.takeDamage(20);
+
+        if (this.hitAudioBuffer) {
+          const hitAudio = new THREE.Audio(this.listener);
+          hitAudio.setBuffer(this.hitAudioBuffer);
+          hitAudio.setVolume(0.5);
+          hitAudio.play();
+        }
 
         // geri itme
         const direction = new THREE.Vector3()

@@ -11,10 +11,35 @@ class ShootingController {
     this.bullets = [];
 
     this.cooldown = 0;
+
+    this.shootAudio = new Audio("/sounds/shoot.mp3");
+    this.shootAudio.volume = 0.5;
+    this.shootAudio.preload = "auto";
+
+    this.fireButton = document.getElementById("fire-button");
+    if (this.fireButton) {
+      this.fireButton.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        this.fireButton.classList.add("pressed");
+        if (!this.ship.isStarted || this.ship.isGameOver) return;
+        if (this.cooldown <= 0) {
+          this.shoot();
+          this.cooldown = 15;
+        }
+      });
+
+      const resetButton = () => {
+        this.fireButton.classList.remove("pressed");
+      };
+
+      this.fireButton.addEventListener("pointerup", resetButton);
+      this.fireButton.addEventListener("pointerleave", resetButton);
+      this.fireButton.addEventListener("pointercancel", resetButton);
+    }
   }
 
   update() {
-    if (this.ship.isGameOver) return;
+    if (this.ship.isGameOver || !this.ship.isStarted) return;
 
     this.cooldown--;
 
@@ -44,6 +69,13 @@ class ShootingController {
     this.scene.add(bullet.mesh);
 
     this.bullets.push(bullet);
+
+    if (this.shootAudio) {
+      this.shootAudio.currentTime = 0;
+      this.shootAudio.play().catch(() => {
+        // mobile/autoplay olabilir, normal oyun etkileşimiyle çalar
+      });
+    }
   }
 }
 
