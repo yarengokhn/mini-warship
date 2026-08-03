@@ -1,5 +1,7 @@
 import Bullet from "../objects/Bullet.js";
 
+const shootSoundUrl = new URL("../assets/shoot.mp3", import.meta.url).href;
+
 class ShootingController {
   constructor(scene, ship, keyboard) {
     this.scene = scene;
@@ -12,7 +14,7 @@ class ShootingController {
 
     this.cooldown = 0;
 
-    this.shootAudio = new Audio("/sounds/shoot.mp3");
+    this.shootAudio = new Audio(shootSoundUrl);
     this.shootAudio.volume = 0.5;
     this.shootAudio.preload = "auto";
 

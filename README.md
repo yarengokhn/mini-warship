@@ -1,26 +1,20 @@
 # Mini Warship
 
-A simple Three.js-based warship game prototype.
-
-## Description
-
-This project is a small warship game example built with `Three.js` and `Vite`. The game scene includes a ship, sea, and camera control.
-
-This repository also serves as an early playable ads prototype example.
-
-> Currently under active development.
+Mini Warship is a 3D warship experience built with Three.js and Vite. The scene includes a ship, sea, enemy ships, shooting mechanics, and damage handling.
 
 ## Features
 
-- 3D scene created with `Three.js`
-- Ship movement and speed control
-- Camera follow mechanics
-- Keyboard controls
+- 3D scene created with Three.js
+- Keyboard-controlled ship movement
+- Enemy ships and combat mechanics
+- Damage system and game-over logic
+- Camera follow system
+- Ambient sound and start experience after the game begins
 
 ## Installation
 
 1. Clone or download the repository.
-2. Open a terminal in the project root.
+2. Open the project root in your terminal.
 3. Install the dependencies:
 
 ```bash
@@ -35,35 +29,41 @@ Start the development server with:
 npm run dev
 ```
 
-Open the browser at `http://localhost:5173` (or the address provided by Vite).
+Then open the following address in your browser:
+
+```text
+http://localhost:5173
+```
 
 ## Controls
 
-- `W` - move forward
-- `S` - move backward
-- `A` - move left
-- `D` - move right
+- A / D - move left / right
+- Space - fire
+- Mobile: swipe left / right to steer and tap the fire button to shoot
+- Mouse / Touch - click the screen to start the game
+
+## Gameplay
+
+- The game starts when the player begins interacting with the scene.
+- Enemy ships approach the scene and fire at the player.
+- If the player's health reaches zero, the game over screen is shown.
+- The game also ends when enemies cross a defined z-axis boundary.
 
 ## Project Structure
 
-- `index.html` - main game page
-- `src/main.js` - application entry point
-- `src/core/SceneManager.js` - scene, camera, and renderer management
-- `src/controllers/CameraController.js` - camera follow system
-- `src/controllers/PlayerController.js` - ship control logic
-- `src/objects/Ship.js` - ship model and movement
-- `src/objects/Sea.js` - sea object
-- `src/game/GameLoop.js` - game loop
+- index.html - main game page
+- src/main.js - application entry point
+- src/core/SceneManager.js - scene, camera, and renderer management
+- src/controllers/PlayerController.js - ship control logic
+- src/controllers/ShootingController.js - shooting system
+- src/controllers/CollisionController.js - collision and damage handling
+- src/game/EnemySpawner.js - enemy creation and updates
+- src/objects/Ship.js - ship model and movement behavior
+- src/objects/EnemyShip.js - enemy ship behavior
 
 ## Development Notes
 
-- The project is configured with `type: "module"`.
-- Local module imports should include the `.js` extension.
-- Code quality tools like `ESLint` can be used for linting.
-
-## Future Improvements
-
-- Improve camera follow behavior
-- Add more gameplay mechanics
-- Enhance visuals and scene detail
+- The project uses ES modules.
+- Local imports should include the .js extension.
+- You can extend the project with ESLint and additional gameplay features if needed.
 

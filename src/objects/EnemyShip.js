@@ -2,6 +2,10 @@ import * as THREE from "three";
 import Bullet from "./Bullet.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
+const shipModelUrl = new URL("../assets/ship-large.glb", import.meta.url).href;
+const explosionSoundUrl = new URL("../assets/explosion.mp3", import.meta.url)
+  .href;
+
 class EnemyShip {
   constructor(scene, playerShip = null) {
     this.scene = scene;
@@ -18,7 +22,7 @@ class EnemyShip {
     const loader = new GLTFLoader();
 
     this.mesh = new THREE.Group();
-    loader.load("/models/ship-large.glb", (gltf) => {
+    loader.load(shipModelUrl, (gltf) => {
       const model = gltf.scene;
 
       //X,Y,Z ekseninde  küçült
@@ -44,7 +48,7 @@ class EnemyShip {
 
     this.mesh.rotation.y = Math.PI;
 
-    this.explosionAudio = new Audio("/sounds/explosion.mp3");
+    this.explosionAudio = new Audio(explosionSoundUrl);
     this.explosionAudio.preload = "auto";
     this.explosionAudio.volume = 0.5;
   }

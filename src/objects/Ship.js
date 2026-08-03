@@ -1,11 +1,15 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
+const shipModelUrl = new URL("../assets/ship-large.glb", import.meta.url).href;
+
 class Ship {
   constructor() {
     this.maxSpeed = 0.05;
     this.health = 100;
     this.boundary = 5; // x ekseninde sınır içinde hareket etme
+    this.startingZ = 0; // gemi bu z konumunda sabit kalacak
+    this.gameOverBoundaryZ = this.startingZ + 1.2; // düşman bu sınırı geçtiğinde oyun biter
     this.velocity = new THREE.Vector3();
     this.acceleration = 0.002;
     this.friction = 0.95; // geminin hareketini yavaşlatmak için sürtünme katsayısı
@@ -17,7 +21,7 @@ class Ship {
     const loader = new GLTFLoader();
 
     this.mesh = new THREE.Group();
-    loader.load("/models/ship-large.glb", (gltf) => {
+    loader.load(shipModelUrl, (gltf) => {
       const model = gltf.scene;
 
       //X,Y,Z ekseninde  küçült
@@ -50,12 +54,14 @@ class Ship {
 
     // this.mesh.rotation.y = Math.PI;
     this.mesh.position.y = 0.3;
+    this.mesh.position.z = this.startingZ;
   }
 
   update() {
     this.velocity.clampLength(0, this.maxSpeed);
     // geminin hızını maksimum hıza sınırlıyoruz
     this.mesh.position.add(this.velocity);
+    this.mesh.position.z = this.startingZ;
     //gemi verilen hız kadar hareket edecek
     this.velocity.multiplyScalar(this.friction);
     //gemi hareket ettikten sonra sürtünme katsayısı ile hızını azaltıyoruz
@@ -74,11 +80,10 @@ class Ship {
   }
 
   moveForward() {
-    this.velocity.z -= this.acceleration;
+    this.mesh.position.z = this.startingZ;
   }
 
   moveBackward() {
-    //this.velocity.z += this.acceleration;
     return; //Gemi geri gitmesin
   }
 

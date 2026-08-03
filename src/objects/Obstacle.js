@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
+const islandModelUrl = new URL("../assets/island.glb", import.meta.url).href;
+
 class Obstacle {
   constructor() {
     this.radius = 0.8;
@@ -8,7 +10,7 @@ class Obstacle {
     const loader = new GLTFLoader();
 
     this.mesh = new THREE.Group();
-    loader.load("/models/island.glb", (gltf) => {
+    loader.load(islandModelUrl, (gltf) => {
       const model = gltf.scene;
 
       //X,Y,Z ekseninde  küçült

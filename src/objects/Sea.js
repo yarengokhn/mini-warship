@@ -1,5 +1,7 @@
 import * as THREE from "three";
 
+const wavesSoundUrl = new URL("../assets/waves.mp3", import.meta.url).href;
+
 const vertexShader = `
   uniform float uTime;
   varying float vElevation;
@@ -66,7 +68,7 @@ class Sea {
     this.playOnLoad = false;
     this.isPaused = false;
 
-    audioLoader.load("/sounds/waves.mp3", (buffer) => {
+    audioLoader.load(wavesSoundUrl, (buffer) => {
       this.sound.setBuffer(buffer);
       this.sound.setLoop(true);
       this.sound.setVolume(0.3);

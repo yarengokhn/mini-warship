@@ -30,7 +30,7 @@ class EnemySpawner {
     }
 
     const reachThreshold = this.playerShip
-      ? this.playerShip.mesh.position.z - 0.5
+      ? (this.playerShip.gameOverBoundaryZ ?? this.playerShip.mesh.position.z)
       : 0;
 
     this.enemies = this.enemies.filter((enemy) => {

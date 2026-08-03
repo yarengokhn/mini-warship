@@ -1,5 +1,7 @@
 import * as THREE from "three";
 
+const shipHitSoundUrl = new URL("../assets/ship_hit.mp3", import.meta.url).href;
+
 class CollisionController {
   constructor(ship, shootingController, enemySpawner, listener) {
     this.ship = ship;
@@ -11,7 +13,7 @@ class CollisionController {
     this.hitAudioBuffer = null;
 
     const loader = new THREE.AudioLoader();
-    loader.load("/sounds/ship_hit.mp3", (buffer) => {
+    loader.load(shipHitSoundUrl, (buffer) => {
       this.hitAudioBuffer = buffer;
     });
   }

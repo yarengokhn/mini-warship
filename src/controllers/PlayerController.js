@@ -17,7 +17,8 @@ class PlayerController {
     const moveRight =
       (keyboard.isDown && keyboard.isDown("KeyD")) ||
       (touch.isRight && touch.isRight());
-    const moveForward = keyboard.isDown && keyboard.isDown("KeyW");
+
+    // const moveForward = keyboard.isDown && keyboard.isDown("KeyW");
 
     if (moveLeft) {
       this.ship.moveLeft();
@@ -25,9 +26,9 @@ class PlayerController {
     if (moveRight) {
       this.ship.moveRight();
     }
-    if (moveForward) {
-      this.ship.moveForward();
-    }
+    // if (moveForward) {
+    //   this.ship.moveForward();
+    // }
   }
 }
 export default PlayerController;
