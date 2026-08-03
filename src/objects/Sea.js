@@ -75,7 +75,7 @@ class Sea {
       this.sound.setVolume(0.3);
       this.audioReady = true;
       if (this.playOnLoad) {
-        this.sound.play();
+        void this.playAmbient();
       }
       // autoplay tarayıcıda genelde engellenir, kullanıcı etkileşimi bekleyeceğiz (aşağıda)
     });
@@ -99,11 +99,24 @@ class Sea {
     }
   }
 
-  playAmbient() {
+  async resumeAudioContext() {
+    try {
+      const context = this.sound?.context || this.listener?.context;
+      if (context && context.state === "suspended") {
+        await context.resume();
+      }
+    } catch {
+      // some browsers block audio context resume without user interaction
+    }
+  }
+
+  async playAmbient() {
     if (!this.audioReady) {
       this.playOnLoad = true;
       return;
     }
+
+    await this.resumeAudioContext();
 
     if (this.sound && !this.sound.isPlaying) {
       this.sound.play();
