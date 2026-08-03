@@ -24,7 +24,6 @@ import HealthUIController from "./controllers/HealthUIController.js";
 
 import EnemySpawner from "./game/EnemySpawner.js";
 
-import "./style.css";
 import ShootingController from "./controllers/ShootingController.js";
 
 const world = new SceneManager();
