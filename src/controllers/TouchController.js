@@ -6,27 +6,61 @@ class TouchController {
     this.currentX = null;
     this.threshold = 0.15;
 
-    window.addEventListener("pointerdown", (e) => {
+    const handleStart = (clientX) => {
       this.active = true;
-      this.startX = e.clientX;
-      this.currentX = e.clientX;
+      this.startX = clientX;
+      this.currentX = clientX;
       this.x = 0;
-    });
+    };
 
-    window.addEventListener("pointermove", (e) => {
+    const handleMove = (clientX) => {
       if (!this.active || this.startX === null) return;
 
-      this.currentX = e.clientX;
+      this.currentX = clientX;
       const delta = this.currentX - this.startX;
-      this.x = delta / window.innerWidth;
-    });
+      this.x = delta / Math.max(window.innerWidth, 1);
+    };
 
-    window.addEventListener("pointerup", () => {
+    const handleEnd = () => {
       this.active = false;
       this.x = 0;
       this.startX = null;
       this.currentX = null;
+    };
+
+    window.addEventListener("pointerdown", (e) => {
+      handleStart(e.clientX);
     });
+
+    window.addEventListener("pointermove", (e) => {
+      handleMove(e.clientX);
+    });
+
+    window.addEventListener("pointerup", handleEnd);
+    window.addEventListener("pointercancel", handleEnd);
+
+    window.addEventListener(
+      "touchstart",
+      (e) => {
+        if (e.touches.length > 0) {
+          handleStart(e.touches[0].clientX);
+        }
+      },
+      { passive: true },
+    );
+
+    window.addEventListener(
+      "touchmove",
+      (e) => {
+        if (e.touches.length > 0) {
+          handleMove(e.touches[0].clientX);
+        }
+      },
+      { passive: true },
+    );
+
+    window.addEventListener("touchend", handleEnd, { passive: true });
+    window.addEventListener("touchcancel", handleEnd, { passive: true });
   }
 
   getInput() {

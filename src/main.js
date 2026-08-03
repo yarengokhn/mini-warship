@@ -25,6 +25,7 @@ import HealthUIController from "./controllers/HealthUIController.js";
 import EnemySpawner from "./game/EnemySpawner.js";
 
 import ShootingController from "./controllers/ShootingController.js";
+import TouchController from "./controllers/TouchController.js";
 
 const world = new SceneManager();
 
@@ -37,6 +38,7 @@ const renderer = world.renderer;
 new Lights(scene);
 
 const keyboard = new Keyboard();
+const touchController = new TouchController();
 
 const ship = new Ship();
 
@@ -46,7 +48,10 @@ const enemySpawner = new EnemySpawner(scene, ship);
 
 const cameraController = new CameraController(camera, ship);
 
-const playerController = new PlayerController(ship, keyboard);
+const playerController = new PlayerController(ship, {
+  keyboard,
+  touch: touchController,
+});
 
 const shootingController = new ShootingController(scene, ship, keyboard);
 
