@@ -400,6 +400,33 @@ body,
   transform: scale(0.98);
 }
 
+#mobile-controls {
+  position: fixed;
+  left: 16px;
+  bottom: 18px;
+  z-index: 310;
+  display: flex;
+  gap: 12px;
+}
+
+.mobile-control-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+  touch-action: manipulation;
+}
+
+.mobile-control-btn:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.28);
+}
+
 #mobile-fire {
   position: fixed;
   right: 16px;

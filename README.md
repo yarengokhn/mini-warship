@@ -1,15 +1,22 @@
 # Mini Warship
 
-Mini Warship is a 3D warship experience built with Three.js and Vite. The scene includes a ship, sea, enemy ships, shooting mechanics, and damage handling.
+Mini Warship is a 3D arcade-style warship game built with Three.js and Vite. The game features a moving ship, sea visuals, enemy ships, shooting mechanics, damage handling, and a mobile-friendly control layout.
+
+## Live Demo
+
+Play the game here:
+
+https://miniwarshipgame.netlify.app/
 
 ## Features
 
-- 3D scene created with Three.js
-- Keyboard-controlled ship movement
-- Enemy ships and combat mechanics
-- Damage system and game-over logic
-- Camera follow system
-- Ambient sound and start experience after the game begins
+- 3D scene rendered with Three.js
+- Keyboard controls for ship movement
+- On-screen left/right controls for mobile devices
+- Enemy spawning and combat mechanics
+- Health system and game-over flow
+- Camera follow behavior
+- Ambient sea sound and start interaction flow
 
 ## Installation
 
@@ -21,7 +28,7 @@ Mini Warship is a 3D warship experience built with Three.js and Vite. The scene 
 npm install
 ```
 
-## Running the Project
+## Running Locally
 
 Start the development server with:
 
@@ -39,22 +46,21 @@ http://localhost:5173
 
 - A / D - move left / right
 - Space - fire
-- Mobile: swipe left / right to steer and tap the fire button to shoot
-- Mouse / Touch - click the screen to start the game
+- Mobile: tap the on-screen ◀ / ▶ buttons to steer and use the FIRE button to shoot
+- Mouse / touch - tap the screen to start the game
 
 ## Gameplay
 
-- The game starts when the player begins interacting with the scene.
-- Enemy ships approach the scene and fire at the player.
-- If the player's health reaches zero, the game over screen is shown.
-- The game also ends when enemies cross a defined z-axis boundary.
+- The game begins when the player interacts with the scene.
+- Enemy ships approach the player and fire at them.
+- The game ends when the player's health reaches zero or an enemy passes the defined boundary.
 
 ## Project Structure
 
 - index.html - main game page
 - src/main.js - application entry point
-- src/core/SceneManager.js - scene, camera, and renderer management
-- src/controllers/PlayerController.js - ship control logic
+- src/core/SceneManager.js - scene, camera, and renderer setup
+- src/controllers/PlayerController.js - ship movement logic
 - src/controllers/ShootingController.js - shooting system
 - src/controllers/CollisionController.js - collision and damage handling
 - src/game/EnemySpawner.js - enemy creation and updates
@@ -65,5 +71,5 @@ http://localhost:5173
 
 - The project uses ES modules.
 - Local imports should include the .js extension.
-- You can extend the project with ESLint and additional gameplay features if needed.
+- You can extend the project with additional gameplay features or UI improvements.
 

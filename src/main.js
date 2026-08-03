@@ -40,6 +40,35 @@ new Lights(scene);
 const keyboard = new Keyboard();
 const touchController = new TouchController();
 
+const leftButton = document.getElementById("move-left");
+const rightButton = document.getElementById("move-right");
+
+if (leftButton) {
+  leftButton.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    touchController.setDirection("left");
+  });
+  leftButton.addEventListener("pointerup", () =>
+    touchController.clearDirection(),
+  );
+  leftButton.addEventListener("pointerleave", () =>
+    touchController.clearDirection(),
+  );
+}
+
+if (rightButton) {
+  rightButton.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    touchController.setDirection("right");
+  });
+  rightButton.addEventListener("pointerup", () =>
+    touchController.clearDirection(),
+  );
+  rightButton.addEventListener("pointerleave", () =>
+    touchController.clearDirection(),
+  );
+}
+
 const ship = new Ship();
 
 // const obstacle = new Obstacle();
