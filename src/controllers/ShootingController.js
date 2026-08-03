@@ -1,6 +1,7 @@
 import Bullet from "../objects/Bullet.js";
 
-const shootSoundUrl = new URL("../assets/shoot.mp3", import.meta.url).href;
+const shootSoundUrl = new URL("../assets/sounds/shoot.mp3", import.meta.url)
+  .href;
 
 class ShootingController {
   constructor(scene, ship, keyboard) {

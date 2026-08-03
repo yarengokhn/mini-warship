@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-const shipModelUrl = new URL("../assets/ship-large.glb", import.meta.url).href;
+const shipModelUrl = new URL("../assets/models/ship-large.glb", import.meta.url)
+  .href;
 
 class Ship {
   constructor() {

@@ -1,6 +1,7 @@
 import * as THREE from "three";
 
-const wavesSoundUrl = new URL("../assets/waves.mp3", import.meta.url).href;
+const wavesSoundUrl = new URL("../assets/sounds/waves.mp3", import.meta.url)
+  .href;
 
 const vertexShader = `
   uniform float uTime;

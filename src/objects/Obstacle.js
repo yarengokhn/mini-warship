@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-const islandModelUrl = new URL("../assets/island.glb", import.meta.url).href;
+const islandModelUrl = new URL("../assets/models/island.glb", import.meta.url)
+  .href;
 
 class Obstacle {
   constructor() {

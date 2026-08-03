@@ -2,9 +2,12 @@ import * as THREE from "three";
 import Bullet from "./Bullet.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-const shipModelUrl = new URL("../assets/ship-large.glb", import.meta.url).href;
-const explosionSoundUrl = new URL("../assets/explosion.mp3", import.meta.url)
+const shipModelUrl = new URL("../assets/models/ship-large.glb", import.meta.url)
   .href;
+const explosionSoundUrl = new URL(
+  "../assets/sounds/explosion.mp3",
+  import.meta.url,
+).href;
 
 class EnemyShip {
   constructor(scene, playerShip = null) {
