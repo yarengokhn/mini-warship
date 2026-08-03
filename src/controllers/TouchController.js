@@ -1,82 +1,55 @@
+// input/TouchController.js
 class TouchController {
   constructor() {
-    this.x = 0;
-    this.active = false;
-    this.startX = null;
-    this.currentX = null;
-    this.threshold = 0.15;
+    this.startX = 0;
+    this.startY = 0;
+    this.deltaX = 0;
+    this.deltaY = 0;
+    this.isTouching = false;
 
-    const handleStart = (clientX) => {
-      this.active = true;
-      this.startX = clientX;
-      this.currentX = clientX;
-      this.x = 0;
-    };
-
-    const handleMove = (clientX) => {
-      if (!this.active || this.startX === null) return;
-
-      this.currentX = clientX;
-      const delta = this.currentX - this.startX;
-      this.x = delta / Math.max(window.innerWidth, 1);
-    };
-
-    const handleEnd = () => {
-      this.active = false;
-      this.x = 0;
-      this.startX = null;
-      this.currentX = null;
-    };
-
-    window.addEventListener("pointerdown", (e) => {
-      handleStart(e.clientX);
+    window.addEventListener("touchstart", (e) => this.onTouchStart(e), {
+      passive: false,
     });
-
-    window.addEventListener("pointermove", (e) => {
-      handleMove(e.clientX);
+    window.addEventListener("touchmove", (e) => this.onTouchMove(e), {
+      passive: false,
     });
-
-    window.addEventListener("pointerup", handleEnd);
-    window.addEventListener("pointercancel", handleEnd);
-
-    window.addEventListener(
-      "touchstart",
-      (e) => {
-        if (e.touches.length > 0) {
-          handleStart(e.touches[0].clientX);
-        }
-      },
-      { passive: true },
-    );
-
-    window.addEventListener(
-      "touchmove",
-      (e) => {
-        if (e.touches.length > 0) {
-          handleMove(e.touches[0].clientX);
-        }
-      },
-      { passive: true },
-    );
-
-    window.addEventListener("touchend", handleEnd, { passive: true });
-    window.addEventListener("touchcancel", handleEnd, { passive: true });
+    window.addEventListener("touchend", () => this.onTouchEnd());
   }
 
-  getInput() {
-    return this.x;
+  onTouchStart(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    this.startX = touch.clientX;
+    this.startY = touch.clientY;
+    this.isTouching = true;
   }
 
+  onTouchMove(e) {
+    e.preventDefault();
+    if (!this.isTouching) return;
+    const touch = e.touches[0];
+    this.deltaX = touch.clientX - this.startX;
+    this.deltaY = touch.clientY - this.startY;
+  }
+
+  onTouchEnd() {
+    this.isTouching = false;
+    this.deltaX = 0;
+    this.deltaY = 0;
+  }
+
+  // basit eşik değeri ile yön belirleme
   isLeft() {
-    return this.active && this.x < -this.threshold;
+    return this.deltaX < -20;
   }
-
   isRight() {
-    return this.active && this.x > this.threshold;
+    return this.deltaX > 20;
   }
-
-  isForward() {
-    return this.active;
+  isUp() {
+    return this.deltaY < -20;
+  }
+  isDown() {
+    return this.deltaY > 20;
   }
 }
 

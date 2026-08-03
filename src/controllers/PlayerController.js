@@ -1,7 +1,8 @@
 class PlayerController {
-  constructor(ship, input) {
+  constructor(ship, input, touch) {
     this.ship = ship;
     this.input = input;
+    this.touch = touch;
   }
   update() {
     if (this.ship.isGameOver || !this.ship.isStarted) {
@@ -29,6 +30,11 @@ class PlayerController {
     // if (moveForward) {
     //   this.ship.moveForward();
     // }
+
+    if (this.touch) {
+      if (this.touch.isLeft()) this.ship.moveLeft();
+      if (this.touch.isRight()) this.ship.moveRight();
+    }
   }
 }
 export default PlayerController;
